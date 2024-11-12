@@ -2,6 +2,18 @@
     "version": "2.0.0",
     "tasks": [
         {
+            "label": "Rust Clippy",
+            "command": "cargo",
+            "args": [
+                "clippy",
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
             "label": "Rust Release Mode",
             "command": "cargo",
             "args": [
