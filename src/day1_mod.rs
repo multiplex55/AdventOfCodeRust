@@ -37,7 +37,7 @@ pub fn trebuchet_part1(file_path: String) {
             }
         }
     }
-    println!("Sum is {}", sum);
+    println!("Day 1 Part 1 Sum is {}", sum);
 }
 
 // The output is wrapped in a Result to allow matching on errors.

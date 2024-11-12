@@ -4,16 +4,17 @@ mod day1_mod;
 use std::env;
 use std::fs::File;
 use std::io::{self, BufRead};
-use std::os;
-use std::path::Path;
+use std::path::PathBuf;
 use std::time::{Duration, Instant, SystemTime};
 
-fn main() {
+// Function to benchmark a specific function with an input file path
+fn benchmark<F>(input_file: &str, func: F)
+where
+    F: Fn(String),
+{
     // Get the current directory as a PathBuf
     let mut path = env::current_dir().expect("Failed to get current directory");
-
-    // Append the relative path to the existing path
-    path.push("inputFiles\\day1.txt");
+    path.push(input_file);
 
     // Check if the file exists
     if path.exists() {
@@ -30,8 +31,8 @@ fn main() {
         // Start the performance timer
         let start = Instant::now();
 
-        // Call the function with the String
-        day1_mod::trebuchet_part1(path_string);
+        // Call the provided function with the input file path
+        func(path_string);
 
         // End the performance timer
         let duration = start.elapsed();
@@ -54,6 +55,14 @@ fn main() {
         );
     } else {
         // Print an error message if the file does not exist
-        eprintln!("Error: The file 'inputFiles\\day1.txt' could not be found.");
+        eprintln!("Error: The file '{}' could not be found.", input_file);
     }
+}
+
+fn main() {
+    // Example usage for day 1
+    benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
+
+    // Future modules can be benchmarked in a similar way:
+    // benchmark("inputFiles\\day2.txt", day2_mod::some_function);
 }
