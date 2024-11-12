@@ -4,7 +4,7 @@ use std::io::{self, BufRead};
 use std::path::Path;
 
 pub fn trebuchet_part1(file_path: String) {
-    let mut sum: i32 = 0;
+    let mut sum: u32 = 0;
 
     if let Ok(lines) = read_lines(file_path) {
         for line in lines.map_while(Result::ok) {
@@ -17,10 +17,10 @@ pub fn trebuchet_part1(file_path: String) {
             for x in current_line.chars() {
                 if x.is_numeric() {
                     if !found_first {
-                        first = x.to_digit(10).unwrap() as i32;
+                        first = x.to_digit(10).unwrap() as u32;
                         found_first = true;
                     } else {
-                        last = x.to_digit(10).unwrap() as i32;
+                        last = x.to_digit(10).unwrap() as u32;
                         found_last = true;
                     }
                 }
@@ -28,11 +28,11 @@ pub fn trebuchet_part1(file_path: String) {
 
             if found_last {
                 sum += (first.to_string() + &last.to_string())
-                    .parse::<i32>()
+                    .parse::<u32>()
                     .unwrap();
             } else {
                 sum += (first.to_string() + &first.to_string())
-                    .parse::<i32>()
+                    .parse::<u32>()
                     .unwrap();
             }
         }
