@@ -19,3 +19,17 @@ Cargo.lock
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+InputFiles/day1_part2_small.txt
+InputFiles/day1_small.txt
+InputFiles/day1.txt
+InputFiles/day2_small.txt
+InputFiles/day2.txt
+InputFiles/day3_small.txt
+InputFiles/day3.txt
+InputFiles/day4_small.txt
+InputFiles/day4.txt
+InputFiles/day5_small.txt
+InputFiles/day5.txt
+InputFiles/day6_small.txt
+InputFiles/day6.txt

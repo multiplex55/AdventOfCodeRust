@@ -1,0 +1,42 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Rust Release Mode",
+            "command": "cargo",
+            "args": [
+                "run",
+                "--release",
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "Rust Build",
+            "command": "cargo",
+            "args": [
+                "build",
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "Rust Clean",
+            "command": "cargo",
+            "args": [
+                "clean",
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
+    ]
+}
