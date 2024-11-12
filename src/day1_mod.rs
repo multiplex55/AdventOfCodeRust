@@ -17,10 +17,10 @@ pub fn trebuchet_part1(file_path: String) {
             for x in current_line.chars() {
                 if x.is_numeric() {
                     if !found_first {
-                        first = x.to_digit(10).unwrap() as u32;
+                        first = x.to_digit(10).unwrap();
                         found_first = true;
                     } else {
-                        last = x.to_digit(10).unwrap() as u32;
+                        last = x.to_digit(10).unwrap();
                         found_last = true;
                     }
                 }
