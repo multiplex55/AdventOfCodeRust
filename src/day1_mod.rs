@@ -128,10 +128,8 @@ pub fn trebuchet_part2(file_path: String) {
             let mut current_digit: u32;
             let mut backup_letter = '0'; // Last character used for backup processing
 
-            let current_line = line; // Comment: could be optimized by removing this variable
-
             // Iterate through each character in the line
-            for x in current_line.chars() {
+            for x in line.chars() {
                 if !x.is_numeric() {
                     potential_string_number.push(x);
                     current_digit =
