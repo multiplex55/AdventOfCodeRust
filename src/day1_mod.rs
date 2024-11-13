@@ -134,12 +134,11 @@ pub fn trebuchet_part2(file_path: String) {
             for x in current_line.chars() {
                 if !x.is_numeric() {
                     potential_string_number.push(x);
-                    // Cloning `digit_table` each time is inefficient; use a reference instead.
                     current_digit =
                         table_contains_key_parse_int(&digit_table, &potential_string_number);
 
                     if current_digit == 0 {
-                        // Comment: Could avoid cloning with an updated helper function signature
+                        // avoid cloning with an updated helper function signature
                         current_digit = table_contains_key_parse_int(
                             &digit_table,
                             format!("{}{}", backup_letter, &potential_string_number).as_str(),
@@ -147,7 +146,7 @@ pub fn trebuchet_part2(file_path: String) {
                     } else {
                         // Update the backup letter with the last character of the current string
                         backup_letter = potential_string_number.chars().last().unwrap();
-                        potential_string_number.clear(); // Clearing instead of reassigning a new String
+                        potential_string_number.clear();
                     }
                 } else {
                     // Safely handle digit parsing
