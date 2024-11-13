@@ -61,7 +61,8 @@ where
 
 fn main() {
     // Example usage for day 1
-    benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
+    //benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
+    benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part2);
 
     // Future modules can be benchmarked in a similar way:
     // benchmark("inputFiles\\day2.txt", day2_mod::some_function);
