@@ -44,8 +44,6 @@ pub fn trebuchet_part1(file_path: String) {
     println!("Day 1 Part 1 Sum is {}", sum);
 }
 
-use std::collections::HashMap;
-
 /// Searches for a key within a provided string and returns the associated value if found.
 ///
 /// This function iterates over a `HashMap` of string keys and numeric values. If any key is found
