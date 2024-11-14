@@ -1,5 +1,7 @@
 #![allow(unused_imports)]
+#![allow(dead_code)]
 mod day1_mod;
+mod day2_mod;
 
 use std::env;
 use std::fs::File;
@@ -64,6 +66,5 @@ fn main() {
     //benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
     benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part2);
 
-    // Future modules can be benchmarked in a similar way:
-    // benchmark("inputFiles\\day2.txt", day2_mod::some_function);
+    benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part1);
 }

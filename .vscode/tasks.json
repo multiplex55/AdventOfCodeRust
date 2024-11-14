@@ -2,7 +2,7 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Rust Clippy",
+            "label": "Rust clippy",
             "command": "cargo",
             "args": [
                 "clippy",
@@ -11,7 +11,19 @@
                 "cwd": "${workspaceRoot}"
             },
             "type": "shell",
-            "problemMatcher": []
+        },
+        {
+            "label": "Rust clippy Apply Suggested",
+            "command": "cargo",
+            "args": [
+                "clippy",
+                "--fix",
+                "--allow-dirty",
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
         },
         {
             "label": "Rust Release Mode",
