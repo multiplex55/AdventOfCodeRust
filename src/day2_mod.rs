@@ -77,6 +77,74 @@ pub fn cube_conundrum_part1(file_path: String) {
     println!("Day 2 Part 1 Sum is {}", sum);
 }
 
+pub fn cube_conundrum_part2(file_path: String) {
+    let mut sum: u32 = 0;
+    let line = "";
+
+    const RED_LIMIT: u32 = 12;
+    const GREEN_LIMIT: u32 = 13;
+    const BLUE_LIMIT: u32 = 14;
+
+    if let Ok(lines) = read_lines(file_path) {
+        for line in lines.map_while(Result::ok) {
+            let mut min_green = 0;
+            let mut min_blue = 0;
+            let mut min_red = 0;
+
+            let split_line: Vec<&str> = line.split(":").collect();
+
+            for x in split_line[1].trim().replace(";", ",").split(", ") {
+                let num_results = x
+                    .split(" ")
+                    .collect::<Vec<&str>>()
+                    .first()
+                    .unwrap()
+                    .parse::<u32>();
+                let num = match num_results {
+                    Ok(nr) => nr,
+                    Err(e) => {
+                        println!("Parse Error for Num_results Raw Value: {} {}", x, e);
+                        0
+                    }
+                };
+
+                let color_res = x.split(" ").collect::<Vec<&str>>();
+                //have to do this cause value is freed while still in use
+                let color_res = color_res.last();
+
+                let color = match color_res {
+                    Some(cr) => cr, // `cr` is already of type `&str`
+                    None => {
+                        println!("Parse Error for color_res Raw Value: {}", x);
+                        ""
+                    }
+                };
+
+                match color {
+                    "green" => {
+                        if min_green < num {
+                            min_green = num
+                        }
+                    }
+                    "red" => {
+                        if min_red < num {
+                            min_red = num
+                        }
+                    }
+                    "blue" => {
+                        if min_blue < num {
+                            min_blue = num
+                        }
+                    }
+                    _ => println!("Unknown color: {}", color),
+                }
+            }
+            sum += min_red * min_blue * min_green
+        }
+    }
+    println!("Day 2 Part 1 Sum is {}", sum);
+}
+
 // The output is wrapped in a Result to allow matching on errors.
 // Returns an Iterator to the Reader of the lines of the file.
 fn read_lines<P>(filename: P) -> io::Result<io::Lines<io::BufReader<File>>>

@@ -66,5 +66,5 @@ fn main() {
     //benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
     //benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part2);
     benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part1);
-    //benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part2);
+    benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part2);
 }
