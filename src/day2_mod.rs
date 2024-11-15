@@ -23,15 +23,31 @@ pub fn cube_conundrum_part1(file_path: String) {
             let mut valid_game = true;
 
             for x in split_line[1].trim().replace(";", ",").split(", ") {
-                let num = x
+                let num_results = x
                     .split(" ")
                     .collect::<Vec<&str>>()
                     .first()
                     .unwrap()
-                    .parse::<u32>()
-                    .unwrap();
+                    .parse::<u32>();
+                let num = match num_results {
+                    Ok(nr) => nr,
+                    Err(e) => {
+                        println!("Parse Error for Num_results Raw Value: {} {}", x, e);
+                        0
+                    }
+                };
 
-                let color = x.split(" ").collect::<Vec<&str>>().last().unwrap() as &str;
+                let color_res = x.split(" ").collect::<Vec<&str>>();
+                //have to do this cause value is freed while still in use
+                let color_res = color_res.last();
+
+                let color = match color_res {
+                    Some(cr) => cr, // `cr` is already of type `&str`
+                    None => {
+                        println!("Parse Error for color_res Raw Value: {}", x);
+                        ""
+                    }
+                };
 
                 match color {
                     "green" => {
