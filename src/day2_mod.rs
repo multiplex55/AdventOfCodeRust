@@ -9,20 +9,18 @@ use std::path::Path;
 use std::vec;
 
 pub fn cube_conundrum_part1(file_path: String) {
-    let sum: u32 = 0;
+    let mut sum: u32 = 0;
     let line = "";
-    let game_index = 0;
 
     const RED_LIMIT: u32 = 12;
-    const GREEN_LIMIT: u32 = 12;
-    const BLUE_LIMIT: u32 = 12;
+    const GREEN_LIMIT: u32 = 13;
+    const BLUE_LIMIT: u32 = 14;
 
     if let Ok(lines) = read_lines(file_path) {
         for line in lines.map_while(Result::ok) {
             let split_line: Vec<&str> = line.split(":").collect();
             let game_num = &split_line[0].split(" ").last();
-            let valid_game = true;
-            println!("DEBUG: game num is: {}", game_num.unwrap());
+            let mut valid_game = true;
 
             for x in split_line[1].trim().replace(";", ",").split(", ") {
                 let num = x
@@ -30,15 +28,33 @@ pub fn cube_conundrum_part1(file_path: String) {
                     .collect::<Vec<&str>>()
                     .first()
                     .unwrap()
-                    .chars()
-                    .next()
-                    .unwrap()
-                    .to_digit(10)
+                    .parse::<u32>()
                     .unwrap();
+
                 let color = x.split(" ").collect::<Vec<&str>>().last().unwrap() as &str;
 
-                println!("Num is {}", num);
-                println!("Color is {}", color);
+                match color {
+                    "green" => {
+                        if num > GREEN_LIMIT {
+                            valid_game = false;
+                        }
+                    }
+                    "red" => {
+                        if num > RED_LIMIT {
+                            valid_game = false;
+                        }
+                    }
+                    "blue" => {
+                        if num > BLUE_LIMIT {
+                            valid_game = false;
+                        }
+                    }
+                    _ => println!("Unknown color: {}", color),
+                }
+            }
+            if valid_game {
+                let current_num = game_num.unwrap().parse::<u32>().unwrap();
+                sum += game_num.unwrap().parse::<u32>().unwrap();
             }
         }
     }

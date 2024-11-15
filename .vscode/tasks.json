@@ -39,6 +39,21 @@
             "problemMatcher": []
         },
         {
+            "label": "Rust Release Mode - Redirect",
+            "command": "cargo",
+            "args": [
+                "run",
+                "--release",
+                ">",
+                "output_debug.txt"
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
             "label": "Rust Build",
             "command": "cargo",
             "args": [
