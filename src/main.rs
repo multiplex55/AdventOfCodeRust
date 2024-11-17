@@ -3,6 +3,7 @@
 mod day1_mod;
 mod day2_mod;
 mod day3_mod_part1;
+mod day3_mod_part2;
 
 use std::env;
 use std::fs::File;
@@ -69,5 +70,6 @@ fn main() {
     // benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part1);
     // benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part2);
 
-    benchmark("inputFiles\\day3.txt", day3_mod_part1::gear_ratio_part1);
+    //benchmark("inputFiles\\day3.txt", day3_mod_part1::gear_ratio_part1);
+    benchmark("inputFiles\\day3.txt", day3_mod_part2::gear_ratio_part2);
 }
