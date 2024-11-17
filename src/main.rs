@@ -2,6 +2,7 @@
 #![allow(dead_code)]
 mod day1_mod;
 mod day2_mod;
+mod day3_mod_part1;
 
 use std::env;
 use std::fs::File;
@@ -63,8 +64,10 @@ where
 
 fn main() {
     // Example usage for day 1
-    //benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
-    //benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part2);
-    benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part1);
-    benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part2);
+    // benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part1);
+    // benchmark("inputFiles\\day1.txt", day1_mod::trebuchet_part2);
+    // benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part1);
+    // benchmark("inputFiles\\day2.txt", day2_mod::cube_conundrum_part2);
+
+    benchmark("inputFiles\\day3.txt", day3_mod_part1::gear_ratio_part1);
 }
