@@ -42,12 +42,19 @@ impl fmt::Display for Cell {
         )
     }
 }
+
+/// Main 'work' function for this problem
+///
+/// # Panics
+///
+/// Panics if lots of reasons
 pub fn gear_ratio_part2(file_path: String) {
     let mut sum: u32 = 0;
     let mut engine_schematic: Vec<Vec<String>> = Vec::new();
     let mut line_counter = 0;
     let mut merged_cells: Vec<Vec<MergedCell>> = Vec::new();
 
+    //read the file line by line and save into engine_schematic
     if let Ok(lines) = read_lines(file_path) {
         for line in lines.map_while(Result::ok) {
             let mut current_line_array: Vec<String> = Vec::new();
@@ -59,38 +66,20 @@ pub fn gear_ratio_part2(file_path: String) {
             engine_schematic.push(current_line_array);
         }
     }
-    //DEBUGGING
-    // for x in engine_schematic.iter() {
-    //     for y in x.iter() {
-    //         println!("{}", y)
-    //     }
-    // }
-
-    //DEBUGGING
 
     for (current_row_counter, row_el) in engine_schematic.iter().enumerate() {
         for (current_col_counter, col_el) in row_el.iter().enumerate() {
             if engine_schematic[current_row_counter][current_col_counter] == "." {
                 continue;
             }
-            if engine_schematic[current_row_counter][current_col_counter]
-                .chars()
-                .next()
-                .unwrap()
-                == '*'
-            {
+            if engine_schematic[current_row_counter][current_col_counter].starts_with('*') {
                 let mut current_sequence: Vec<Vec<MergedCell>> = Vec::new();
                 current_sequence.push(check_for_numbers(
                     &engine_schematic,
                     current_row_counter.try_into().unwrap(),
                     current_col_counter.try_into().unwrap(),
                 ));
-                //Debugging print current_sequence
-                for v_cs in current_sequence.iter() {
-                    for cs in v_cs {
-                        println!("{}", cs)
-                    }
-                }
+
                 let current_sequence: Vec<_> = current_sequence
                     .clone()
                     .into_iter()
@@ -99,46 +88,21 @@ pub fn gear_ratio_part2(file_path: String) {
                     .into_iter()
                     .collect();
 
-                println!("Length is {}", current_sequence.len());
                 if current_sequence.len() == 2 {
                     let first_num = current_sequence.first().unwrap().number;
                     let second_num = current_sequence.last().unwrap().number;
 
                     sum += first_num * second_num;
                 }
-
-                println!("DEDUPLICATE Called");
-                // slightly expensive but simple way to deduplicate, yolo
-
-                // //DEBUGGING
-                // for row in merged_cells.iter() {
-                //     for cell in row.iter() {
-                //         println!(
-                //             "MergedCell {{ number: {}, row: {}, col: {} }}",
-                //             cell.number, cell.row, cell.col
-                //         );
-                //     }
-                // }
-                println!("=======================")
             }
         }
     }
-
-    //DEBUGGING
-    // for row in merged_cells.iter() {
-    //     for cell in row.iter() {
-    //         println!(
-    //             "MergedCell {{ number: {}, row: {}, col: {} }}",
-    //             cell.number, cell.row, cell.col
-    //         );
-    //     }
-    //}
 
     println!("Day 3 Part 1 Sum is {}", sum);
 }
 
 fn check_for_numbers(
-    engine_schematic: &Vec<Vec<String>>,
+    engine_schematic: &[Vec<String>],
     original_row_index: isize,
     original_col_index: isize,
 ) -> Vec<MergedCell> {
@@ -155,7 +119,7 @@ fn check_for_numbers(
     const ONE: isize = 1;
 
     // Check up
-    if original_row_index - 1 >= ZERO {
+    if original_row_index > ZERO {
         let char_at_index = engine_schematic[original_row_index as usize - 1]
             [original_col_index as usize]
             .chars()
@@ -168,18 +132,11 @@ fn check_for_numbers(
                 (original_row_index - 1).try_into().unwrap(),
                 original_col_index.try_into().unwrap(),
             ));
-            // println!("DEBUG: direction UP");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check right
-    if original_col_index + 1 <= max_col {
+    if original_col_index < max_col {
         let char_at_index = engine_schematic[original_row_index as usize]
             [(original_col_index + 1) as usize]
             .chars()
@@ -192,18 +149,11 @@ fn check_for_numbers(
                 (original_row_index).try_into().unwrap(),
                 (original_col_index + 1).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction right");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check down
-    if original_row_index + 1 <= max_row {
+    if original_row_index < max_row {
         let char_at_index = engine_schematic[(original_row_index + 1) as usize]
             [(original_col_index) as usize]
             .chars()
@@ -216,18 +166,11 @@ fn check_for_numbers(
                 (original_row_index + 1).try_into().unwrap(),
                 (original_col_index).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction down");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check left
-    if original_col_index - 1 >= ZERO {
+    if original_col_index > ZERO {
         let char_at_index = engine_schematic[(original_row_index) as usize]
             [(original_col_index - 1) as usize]
             .chars()
@@ -240,18 +183,11 @@ fn check_for_numbers(
                 (original_row_index).try_into().unwrap(),
                 (original_col_index - 1).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction left");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check up right
-    if original_row_index - 1 >= ZERO && original_col_index + 1 <= max_col {
+    if original_row_index > ZERO && original_col_index < max_col {
         let char_at_index = engine_schematic[(original_row_index - 1) as usize]
             [(original_col_index + 1) as usize]
             .chars()
@@ -264,18 +200,11 @@ fn check_for_numbers(
                 (original_row_index - 1).try_into().unwrap(),
                 (original_col_index + 1).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction up right");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check up left
-    if original_row_index - 1 >= ZERO && original_col_index - 1 >= ZERO {
+    if original_row_index > ZERO && original_col_index > ZERO {
         let char_at_index = engine_schematic[(original_row_index - 1) as usize]
             [(original_col_index - 1) as usize]
             .chars()
@@ -288,18 +217,11 @@ fn check_for_numbers(
                 (original_row_index - 1).try_into().unwrap(),
                 (original_col_index - 1).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction up left");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check down right
-    if original_row_index + 1 <= max_row && original_col_index + 1 <= max_col {
+    if original_row_index < max_row && original_col_index < max_col {
         let char_at_index = engine_schematic[(original_row_index + 1) as usize]
             [(original_col_index + 1) as usize]
             .chars()
@@ -312,18 +234,11 @@ fn check_for_numbers(
                 (original_row_index + 1).try_into().unwrap(),
                 (original_col_index + 1).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction down right");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
 
     // Check down left
-    if original_row_index + 1 <= max_row && original_col_index - 1 >= ZERO {
+    if original_row_index < max_row && original_col_index > ZERO {
         let char_at_index = engine_schematic[(original_row_index + 1) as usize]
             [(original_col_index - 1) as usize]
             .chars()
@@ -336,17 +251,8 @@ fn check_for_numbers(
                 (original_row_index + 1).try_into().unwrap(),
                 (original_col_index - 1).try_into().unwrap(),
             ));
-            // println!("DEBUG: direction down left");
-            // for cell in merged_cells.iter() {
-            //     println!(
-            //         "MergedCell {{ number: {}, row: {}, col: {} }}",
-            //         cell.number, cell.row, cell.col
-            //     );
-            // }
         }
     }
-    // println!("DEBUG Exiting check for numbers");
-    // println!("@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     merged_cells
 }
 
@@ -367,11 +273,6 @@ fn walk_and_find_numbers(
         .next()
         .unwrap();
 
-    // println!(
-    //     "Current row {} col {} current char {}",
-    //     current_row_index, current_col_index, current_char
-    // );
-    // println!("Walk left");
     while current_char.is_ascii_digit() {
         current_char = engine_schematic[current_row_index][current_col_index]
             .chars()
@@ -397,7 +298,6 @@ fn walk_and_find_numbers(
         .next()
         .unwrap();
 
-    // println!("Walk right");
     while current_char.is_ascii_digit() {
         current_char = engine_schematic[current_row_index][current_col_index]
             .chars()
@@ -414,20 +314,8 @@ fn walk_and_find_numbers(
             break;
         }
     }
-    // println!("Cells before sorting");
-
-    // for c in &cells {
-    //     println!("{}", c);
-    // }
-    // if cells.is_empty() {
-    //     println!("brekapoint")
-    // }
 
     cells.sort_unstable_by_key(|k| k.col);
-    // println!("Cells after sorting");
-    // for c in &cells {
-    //     println!("{}", c);
-    // }
     let chars_to_filter = ['.', '*', '$', '#', '+', '=', '@', '/', '%', '-', '&'];
 
     for ch in chars_to_filter {

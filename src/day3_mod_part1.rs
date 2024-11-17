@@ -143,7 +143,7 @@ fn check_for_numbers(
     const ONE: isize = 1;
 
     // Check up
-    if original_row_index - 1 >= ZERO {
+    if original_row_index > ZERO {
         let char_at_index = engine_schematic[original_row_index as usize - 1]
             [original_col_index as usize]
             .chars()
@@ -191,7 +191,7 @@ fn check_for_numbers(
     }
 
     // Check down
-    if original_row_index + 1 <= max_row {
+    if original_row_index < max_row {
         let char_at_index = engine_schematic[(original_row_index + 1) as usize]
             [(original_col_index) as usize]
             .chars()
@@ -215,7 +215,7 @@ fn check_for_numbers(
     }
 
     // Check left
-    if original_col_index - 1 >= ZERO {
+    if original_col_index > ZERO {
         let char_at_index = engine_schematic[(original_row_index) as usize]
             [(original_col_index - 1) as usize]
             .chars()
@@ -239,7 +239,7 @@ fn check_for_numbers(
     }
 
     // Check up right
-    if original_row_index - 1 >= ZERO && original_col_index + 1 <= max_col {
+    if original_row_index > ZERO && original_col_index < max_col {
         let char_at_index = engine_schematic[(original_row_index - 1) as usize]
             [(original_col_index + 1) as usize]
             .chars()
@@ -263,7 +263,7 @@ fn check_for_numbers(
     }
 
     // Check up left
-    if original_row_index - 1 >= ZERO && original_col_index - 1 >= ZERO {
+    if original_row_index > ZERO && original_col_index > ZERO {
         let char_at_index = engine_schematic[(original_row_index - 1) as usize]
             [(original_col_index - 1) as usize]
             .chars()
@@ -287,7 +287,7 @@ fn check_for_numbers(
     }
 
     // Check down right
-    if original_row_index + 1 <= max_row && original_col_index + 1 <= max_col {
+    if original_row_index < max_row && original_col_index < max_col {
         let char_at_index = engine_schematic[(original_row_index + 1) as usize]
             [(original_col_index + 1) as usize]
             .chars()
@@ -311,7 +311,7 @@ fn check_for_numbers(
     }
 
     // Check down left
-    if original_row_index + 1 <= max_row && original_col_index - 1 >= ZERO {
+    if original_row_index < max_row && original_col_index > ZERO {
         let char_at_index = engine_schematic[(original_row_index + 1) as usize]
             [(original_col_index - 1) as usize]
             .chars()
