@@ -1,6 +1,7 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 
+mod year2020;
 mod year2023;
 
 use std::env;
@@ -59,18 +60,84 @@ where
         // Print an error message if the file does not exist
         eprintln!("Error: The file '{}' could not be found.", input_file);
     }
+    println!();
 }
 
 fn main() {
-    // Example usage for day 1
-    // benchmark("inputFiles\\2023\\day1.txt", year2023::day1_mod::trebuchet_part1);
-    // benchmark("inputFiles\\2023\\day1.txt", year2023::day1_mod::trebuchet_part2);
-    // benchmark("inputFiles\\2023\\day2.txt", year2023::day2_mod::cube_conundrum_part1);
-    // benchmark("inputFiles\\2023\\day2.txt", year2023::day2_mod::cube_conundrum_part2);
+    println!("Which function do you want to run");
+    const AVAILABLE_FUNCTIONS_TO_RUN: [&str; 8] = [
+        "2020 1 1 -> Day 1 2020 Part 1",
+        "2020 1 2 -> Day 1 2020 Part 2",
+        "2023 1 1 -> Day 1 2020 Part 1",
+        "2023 1 2 -> Day 1 2023 Part 2",
+        "2023 2 1 -> Day 2 2023 Part 1",
+        "2023 2 2 -> Day 2 2023 Part 2",
+        "2023 3 1 -> Day 3 2023 Part 1",
+        "2023 3 2 -> Day 3 2023 Part 2",
+    ];
+    for avtr in AVAILABLE_FUNCTIONS_TO_RUN {
+        println!("{}", avtr)
+    }
+    println!("------------\n\r\nEnter ID: ");
 
-    //benchmark("inputFiles\\day3.txt", day3_mod_part1::gear_ratio_part1);
-    benchmark(
-        "inputFiles\\2023\\day3.txt",
-        year2023::day3_mod_part2::gear_ratio_part2,
-    );
+    let mut input = String::new();
+    io::stdin()
+        .read_line(&mut input)
+        .expect("Error: unable to read input");
+
+    launch_aoc_function(input);
+}
+
+fn launch_aoc_function(input: String) {
+    match input.as_str().strip_suffix("\r\n").unwrap() {
+        "2020 1 1" => {
+            benchmark(
+                "inputFiles\\2020\\day1.txt",
+                year2020::day1_mod::report_repair_part1,
+            );
+        }
+        "2020 1 2" => {
+            benchmark(
+                "inputFiles\\2020\\day1.txt",
+                year2020::day1_mod::report_repair_part2,
+            );
+        }
+        "2023 1 1" => {
+            benchmark(
+                "inputFiles\\2023\\day1.txt",
+                year2023::day1_mod::trebuchet_part1,
+            );
+        }
+        "2023 1 2" => {
+            benchmark(
+                "inputFiles\\2023\\day1.txt",
+                year2023::day1_mod::trebuchet_part2,
+            );
+        }
+        "2023 2 1" => {
+            benchmark(
+                "inputFiles\\2023\\day2.txt",
+                year2023::day2_mod::cube_conundrum_part1,
+            );
+        }
+        "2023 2 2" => {
+            benchmark(
+                "inputFiles\\2023\\day2.txt",
+                year2023::day2_mod::cube_conundrum_part2,
+            );
+        }
+        "2023 3 1" => {
+            benchmark(
+                "inputFiles\\day3.txt",
+                year2023::day3_mod_part1::gear_ratio_part1,
+            );
+        }
+        "2023 3 2" => {
+            benchmark(
+                "inputFiles\\2023\\day3.txt",
+                year2023::day3_mod_part2::gear_ratio_part2,
+            );
+        }
+        _ => print!("Did not match anything"),
+    }
 }
