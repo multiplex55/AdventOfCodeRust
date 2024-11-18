@@ -43,7 +43,7 @@ impl fmt::Display for Cell {
     }
 }
 pub fn gear_ratio_part1(file_path: String) {
-    let mut sum: u32 = 0;
+    let mut sum: u32;
     let mut engine_schematic: Vec<Vec<String>> = Vec::new();
     let mut line_counter = 0;
     let mut merged_cells: Vec<Vec<MergedCell>> = Vec::new();
@@ -115,7 +115,6 @@ pub fn gear_ratio_part1(file_path: String) {
             );
         }
     }
-
     sum = merged_cells
         .iter()
         .flat_map(|row| row.iter())

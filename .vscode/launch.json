@@ -4,15 +4,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'advent_of_code_2023'",
+            "name": "Debug executable 'advent_of_code_rust'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=advent_of_code_2023",
-                    "--package=advent_of_code_2023"
+                    "--bin=advent_of_code_rust",
+                    "--package=advent_of_code_rust"
                 ],
                 "filter": {
-                    "name": "advent_of_code_2023",
+                    "name": "advent_of_code_rust",
                     "kind": "bin"
                 }
             },
@@ -22,16 +22,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'advent_of_code_2023'",
+            "name": "Debug unit tests in executable 'advent_of_code_rust'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=advent_of_code_2023",
-                    "--package=advent_of_code_2023"
+                    "--bin=advent_of_code_rust",
+                    "--package=advent_of_code_rust"
                 ],
                 "filter": {
-                    "name": "advent_of_code_2023",
+                    "name": "advent_of_code_rust",
                     "kind": "bin"
                 }
             },

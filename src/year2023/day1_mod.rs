@@ -1,4 +1,5 @@
 //https://adventofcode.com/2023/day/1
+
 #![allow(unused_variables)]
 #![allow(dead_code)]
 use core::hash;
