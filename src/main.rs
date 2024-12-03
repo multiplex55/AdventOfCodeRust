@@ -176,7 +176,7 @@ fn launch_aoc_function(input: String) {
         "2024 2 2" => {
             benchmark(
                 "inputFiles\\2024\\day2.txt",
-                year2024::day2_mod::red_nosed_reports,
+                year2024::day2_mod_part2::red_nosed_reports,
             );
         }
         _ => print!("Did not match anything"),
