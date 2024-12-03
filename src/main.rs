@@ -1,5 +1,6 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
+#![allow(unreachable_code)]
 
 mod year2020;
 mod year2023;
@@ -67,13 +68,17 @@ where
 
 fn main() {
     benchmark(
-        "inputFiles\\2024\\day1.txt",
-        year2024::day1_mod_part2::historian_hysteria,
+        "inputFiles\\2024\\day2.txt",
+        year2024::day2_mod::red_nosed_reports,
+    );
+    benchmark(
+        "inputFiles\\2024\\day2.txt",
+        year2024::day2_mod_part2::red_nosed_reports,
     );
     exit(0);
 
     println!("Which function do you want to run");
-    const AVAILABLE_FUNCTIONS_TO_RUN: [&str; 9] = [
+    const AVAILABLE_FUNCTIONS_TO_RUN: [&str; 12] = [
         "2020 1 1 -> Day 1 2020 Part 1",
         "2020 1 2 -> Day 1 2020 Part 2",
         "2023 1 1 -> Day 1 2020 Part 1",
@@ -83,6 +88,9 @@ fn main() {
         "2023 3 1 -> Day 3 2023 Part 1",
         "2023 3 2 -> Day 3 2023 Part 2",
         "2024 1 1 -> Day 1 2024 Part 1",
+        "2024 1 2 -> Day 1 2024 Part 2",
+        "2024 2 1 -> Day 2 2024 Part 1",
+        "2024 2 2 -> Day 2 2024 Part 2",
     ];
     for avtr in AVAILABLE_FUNCTIONS_TO_RUN {
         println!("{}", avtr)
@@ -157,6 +165,18 @@ fn launch_aoc_function(input: String) {
             benchmark(
                 "inputFiles\\2024\\day1.txt",
                 year2024::day1_mod_part2::historian_hysteria,
+            );
+        }
+        "2024 2 1" => {
+            benchmark(
+                "inputFiles\\2024\\day2.txt",
+                year2024::day2_mod::red_nosed_reports,
+            );
+        }
+        "2024 2 2" => {
+            benchmark(
+                "inputFiles\\2024\\day2.txt",
+                year2024::day2_mod::red_nosed_reports,
             );
         }
         _ => print!("Did not match anything"),

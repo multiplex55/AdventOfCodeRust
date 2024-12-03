@@ -11,7 +11,6 @@ use std::path::{absolute, Path};
 use std::{cell, vec};
 
 pub fn historian_hysteria(file_path: String) {
-    let mut sum: u32 = 0;
     let mut location_ids: Vec<u32> = Vec::new();
     let mut location_ids_compare: Vec<u32> = Vec::new();
 
@@ -24,8 +23,8 @@ pub fn historian_hysteria(file_path: String) {
     location_ids.sort();
     location_ids_compare.sort();
 
-    sum = calculate_differences(location_ids, location_ids_compare);
-    println!("Day 1 Part 1 Sum is {}", sum);
+    let answer = calculate_differences(location_ids, location_ids_compare);
+    println!("Day 1 Part 2 answer is {}", answer);
 }
 
 fn calculate_differences(location_ids: Vec<u32>, location_ids_compare: Vec<u32>) -> u32 {
