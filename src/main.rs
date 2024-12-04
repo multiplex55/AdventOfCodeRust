@@ -67,18 +67,14 @@ where
 }
 
 fn main() {
-    benchmark(
-        "inputFiles\\2024\\day2.txt",
-        year2024::day2_mod::red_nosed_reports,
-    );
-    benchmark(
-        "inputFiles\\2024\\day2.txt",
-        year2024::day2_mod_part2::red_nosed_reports,
-    );
-    exit(0);
+    // benchmark(
+    //     "inputFiles\\2024\\day3.txt",
+    //     year2024::day3_mod_part2::mull_it_over,
+    // );
+    // exit(0);
 
     println!("Which function do you want to run");
-    const AVAILABLE_FUNCTIONS_TO_RUN: [&str; 12] = [
+    const AVAILABLE_FUNCTIONS_TO_RUN: [&str; 13] = [
         "2020 1 1 -> Day 1 2020 Part 1",
         "2020 1 2 -> Day 1 2020 Part 2",
         "2023 1 1 -> Day 1 2020 Part 1",
@@ -91,6 +87,7 @@ fn main() {
         "2024 1 2 -> Day 1 2024 Part 2",
         "2024 2 1 -> Day 2 2024 Part 1",
         "2024 2 2 -> Day 2 2024 Part 2",
+        "2024 3 1 -> Day 3 2024 Part 1",
     ];
     for avtr in AVAILABLE_FUNCTIONS_TO_RUN {
         println!("{}", avtr)
@@ -177,6 +174,18 @@ fn launch_aoc_function(input: String) {
             benchmark(
                 "inputFiles\\2024\\day2.txt",
                 year2024::day2_mod_part2::red_nosed_reports,
+            );
+        }
+        "2024 3 1" => {
+            benchmark(
+                "inputFiles\\2024\\day2.txt",
+                year2024::day2_mod_part2::red_nosed_reports,
+            );
+        }
+        "2024 3 2" => {
+            benchmark(
+                "inputFiles\\2024\\day3.txt",
+                year2024::day3_mod_part2::mull_it_over,
             );
         }
         _ => print!("Did not match anything"),
