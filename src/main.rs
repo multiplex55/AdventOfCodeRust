@@ -17,60 +17,6 @@ use std::path::{Path, PathBuf};
 use std::process::exit;
 use std::time::{Duration, Instant, SystemTime};
 
-// Function to benchmark a specific function with an input file path
-fn benchmark<F>(input_file: &str, func: F)
-where
-    F: Fn(String),
-{
-    // Get the current directory as a PathBuf
-    let path = env::current_dir().unwrap();
-
-    // Check if the file exists
-    if path.exists() {
-        // Convert the PathBuf to a String
-        let path_string = {
-            let this = path.to_str();
-            match this {
-                Some(val) => val,
-                None => panic!("Failed to convert path to string"),
-            }
-        }
-        .to_string();
-
-        // Print start time
-        let start_time = SystemTime::now();
-        println!("Start time: {start_time:?}");
-
-        // Start the performance timer
-        let start = Instant::now();
-
-        // Call the provided function with the input file path
-        func(path_string);
-
-        // End the performance timer
-        let duration = start.elapsed();
-
-        // Print end time
-        let end_time = SystemTime::now();
-        println!("End time: {end_time:?}");
-
-        // Format the duration into minutes, seconds, milliseconds, and microseconds
-        let total_seconds = duration.as_secs();
-        let minutes = total_seconds / 60;
-        let seconds = total_seconds % 60;
-        let milliseconds = duration.subsec_millis();
-        let microseconds = duration.subsec_micros() % 1_000;
-
-        // Print the formatted duration
-        println!(
-            "Duration: {minutes:?} minutes, {seconds:?} seconds, {milliseconds:?} milliseconds, {microseconds:?} microseconds");
-    } else {
-        // Print an error message if the file does not exist
-        println!("Error: The file '{input_file:?}' could not be found.");
-    }
-    println!();
-}
-
 fn main() {
     env::set_var("RUST_BACKTRACE", "1");
     let year_day_pattern = Regex::new(r"year(\d{4})::day(\d{2})").unwrap();
