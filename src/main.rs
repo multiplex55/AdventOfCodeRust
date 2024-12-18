@@ -1,15 +1,19 @@
 #![allow(unused_imports)]
 #![allow(dead_code)]
 #![allow(unreachable_code)]
+#![allow(clippy::use_debug)]
 
-mod year2020;
-mod year2023;
-mod year2024;
-
+use advent_of_code_rust::util::ansi::*;
+use advent_of_code_rust::util::parse::*;
+use advent_of_code_rust::*;
+use regex::Regex;
 use std::env;
+use std::env::args;
+use std::fs::read_to_string;
 use std::fs::File;
 use std::io::{self, BufRead};
-use std::path::PathBuf;
+use std::iter::empty;
+use std::path::{Path, PathBuf};
 use std::process::exit;
 use std::time::{Duration, Instant, SystemTime};
 
@@ -19,20 +23,23 @@ where
     F: Fn(String),
 {
     // Get the current directory as a PathBuf
-    let mut path = env::current_dir().expect("Failed to get current directory");
-    path.push(input_file);
+    let path = env::current_dir().unwrap();
 
     // Check if the file exists
     if path.exists() {
         // Convert the PathBuf to a String
-        let path_string = path
-            .to_str()
-            .expect("Failed to convert path to string")
-            .to_string();
+        let path_string = {
+            let this = path.to_str();
+            match this {
+                Some(val) => val,
+                None => panic!("Failed to convert path to string"),
+            }
+        }
+        .to_string();
 
         // Print start time
         let start_time = SystemTime::now();
-        println!("Start time: {:?}", start_time);
+        println!("Start time: {start_time:?}");
 
         // Start the performance timer
         let start = Instant::now();
@@ -45,7 +52,7 @@ where
 
         // Print end time
         let end_time = SystemTime::now();
-        println!("End time: {:?}", end_time);
+        println!("End time: {end_time:?}");
 
         // Format the duration into minutes, seconds, milliseconds, and microseconds
         let total_seconds = duration.as_secs();
@@ -56,138 +63,131 @@ where
 
         // Print the formatted duration
         println!(
-            "Duration: {} minutes, {} seconds, {} milliseconds, {} microseconds",
-            minutes, seconds, milliseconds, microseconds
-        );
+            "Duration: {minutes:?} minutes, {seconds:?} seconds, {milliseconds:?} milliseconds, {microseconds:?} microseconds");
     } else {
         // Print an error message if the file does not exist
-        eprintln!("Error: The file '{}' could not be found.", input_file);
+        println!("Error: The file '{input_file:?}' could not be found.");
     }
     println!();
 }
 
 fn main() {
-    // benchmark(
-    //     "inputFiles\\2024\\day3.txt",
-    //     year2024::day3_mod_part2::mull_it_over,
-    // );
-    // exit(0);
+    env::set_var("RUST_BACKTRACE", "1");
+    let year_day_pattern = Regex::new(r"year(\d{4})::day(\d{2})").unwrap();
+    let year_pattern = Regex::new(r"year(\d{4})").unwrap();
 
-    println!("Which function do you want to run");
-    const AVAILABLE_FUNCTIONS_TO_RUN: [&str; 13] = [
-        "2020 1 1 -> Day 1 2020 Part 1",
-        "2020 1 2 -> Day 1 2020 Part 2",
-        "2023 1 1 -> Day 1 2020 Part 1",
-        "2023 1 2 -> Day 1 2023 Part 2",
-        "2023 2 1 -> Day 2 2023 Part 1",
-        "2023 2 2 -> Day 2 2023 Part 2",
-        "2023 3 1 -> Day 3 2023 Part 1",
-        "2023 3 2 -> Day 3 2023 Part 2",
-        "2024 1 1 -> Day 1 2024 Part 1",
-        "2024 1 2 -> Day 1 2024 Part 2",
-        "2024 2 1 -> Day 2 2024 Part 1",
-        "2024 2 2 -> Day 2 2024 Part 2",
-        "2024 3 1 -> Day 3 2024 Part 1",
-    ];
-    for avtr in AVAILABLE_FUNCTIONS_TO_RUN {
-        println!("{}", avtr)
+    let (year, day) = args()
+        .skip(1) // Skip the program name
+        .find_map(|arg| {
+            year_day_pattern
+                .captures(&arg)
+                .map(|caps| (Some(caps[1].to_string()), Some(caps[2].to_string())))
+                .or_else(|| {
+                    year_pattern
+                        .captures(&arg)
+                        .map(|caps| (Some(caps[1].to_string()), None))
+                })
+        })
+        .unwrap_or((None, None));
+
+    println!("Year: {year:?}");
+    println!("Day: {day:?}");
+
+    // Filter solutions
+    let solutions = empty()
+        .chain(year2020())
+        .filter(|solution| match &year {
+            Some(y) => y
+                .parse::<u32>()
+                .map_or(false, |y_parsed| y_parsed == solution.year),
+            None => true,
+        })
+        .filter(|solution| match &day {
+            Some(d) => d
+                .parse::<u32>()
+                .map_or(false, |d_parsed| d_parsed == solution.day),
+            None => true,
+        });
+
+    // Pretty print output and timing for each solution
+    let mut solved = 0;
+    let mut duration = Duration::ZERO;
+
+    for Solution {
+        year,
+        day,
+        path,
+        wrapper,
+    } in solutions
+    {
+        if let Ok(data) = read_to_string(&path) {
+            let instant = Instant::now();
+            let (part1, part2) = wrapper(data);
+            let elapsed = instant.elapsed();
+
+            solved += 2;
+            duration += elapsed;
+
+            println!("{BOLD}{YELLOW}{year} Day {day:02}{RESET}");
+            println!("    Part 1: {part1}");
+            println!("    Part 2: {part2}");
+            println!("    Elapsed: {} μs", elapsed.as_micros());
+        } else {
+            eprintln!("{BOLD}{RED}{year} Day {day:02}{RESET}");
+            eprintln!("    Missing input!");
+            eprintln!(
+                "    Place input file in {BOLD}{WHITE}{}{RESET}",
+                path.display()
+            );
+        }
     }
-    println!("------------\n\r\nEnter ID: ");
 
-    let mut input = String::new();
-    io::stdin()
-        .read_line(&mut input)
-        .expect("Error: unable to read input");
-
-    launch_aoc_function(input);
-}
-
-fn launch_aoc_function(input: String) {
-    match input.as_str().strip_suffix("\r\n").unwrap() {
-        "2020 1 1" => {
-            benchmark(
-                "inputFiles\\2020\\day1.txt",
-                year2020::day1_mod::report_repair_part1,
-            );
-        }
-        "2020 1 2" => {
-            benchmark(
-                "inputFiles\\2020\\day1.txt",
-                year2020::day1_mod::report_repair_part2,
-            );
-        }
-        "2023 1 1" => {
-            benchmark(
-                "inputFiles\\2023\\day1.txt",
-                year2023::day1_mod::trebuchet_part1,
-            );
-        }
-        "2023 1 2" => {
-            benchmark(
-                "inputFiles\\2023\\day1.txt",
-                year2023::day1_mod::trebuchet_part2,
-            );
-        }
-        "2023 2 1" => {
-            benchmark(
-                "inputFiles\\2023\\day2.txt",
-                year2023::day2_mod::cube_conundrum_part1,
-            );
-        }
-        "2023 2 2" => {
-            benchmark(
-                "inputFiles\\2023\\day2.txt",
-                year2023::day2_mod::cube_conundrum_part2,
-            );
-        }
-        "2023 3 1" => {
-            benchmark(
-                "inputFiles\\day3.txt",
-                year2023::day3_mod_part1::gear_ratio_part1,
-            );
-        }
-        "2023 3 2" => {
-            benchmark(
-                "inputFiles\\2023\\day3.txt",
-                year2023::day3_mod_part2::gear_ratio_part2,
-            );
-        }
-        "2024 1 1" => {
-            benchmark(
-                "inputFiles\\2024\\day1.txt",
-                year2024::day1_mod::historian_hysteria,
-            );
-        }
-        "2024 1 2" => {
-            benchmark(
-                "inputFiles\\2024\\day1.txt",
-                year2024::day1_mod_part2::historian_hysteria,
-            );
-        }
-        "2024 2 1" => {
-            benchmark(
-                "inputFiles\\2024\\day2.txt",
-                year2024::day2_mod::red_nosed_reports,
-            );
-        }
-        "2024 2 2" => {
-            benchmark(
-                "inputFiles\\2024\\day2.txt",
-                year2024::day2_mod_part2::red_nosed_reports,
-            );
-        }
-        "2024 3 1" => {
-            benchmark(
-                "inputFiles\\2024\\day2.txt",
-                year2024::day2_mod_part2::red_nosed_reports,
-            );
-        }
-        "2024 3 2" => {
-            benchmark(
-                "inputFiles\\2024\\day3.txt",
-                year2024::day3_mod_part2::mull_it_over,
-            );
-        }
-        _ => print!("Did not match anything"),
+    // Optionally print totals
+    if args().any(|a| a == "--totals") {
+        println!("{BOLD}{YELLOW}⭐ {solved}{RESET}");
+        println!("{BOLD}{WHITE}🕓 {} ms{RESET}", duration.as_millis());
     }
 }
+
+struct Solution {
+    year: u32,
+    day: u32,
+    path: PathBuf,
+    wrapper: fn(String) -> (String, String),
+}
+
+macro_rules! run {
+    ($year:tt $($day:tt),*) => {
+        fn $year() -> Vec<Solution> {
+            vec![$({
+                let year = stringify!($year);
+                let day = stringify!($day);
+                let path = Path::new("input").join(year).join(day).with_extension("txt");
+
+                let wrapper = |data: String| {
+                    use $year::$day::*;
+
+                    let input = parse(&data);
+                    let part1 = part1(&input);
+                    let part2 = part2(&input);
+
+                    (part1.to_string(), part2.to_string())
+                };
+
+                Solution { year: year.unsigned(), day: day.unsigned(), path, wrapper }
+            },)*]
+        }
+    }
+}
+
+run!(year2020
+    day01
+);
+
+// run!(year2023
+//     day01, day02, day03
+// );
+
+// run!(year2024
+//     day01, day02, day03
+// );

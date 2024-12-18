@@ -21,6 +21,4 @@ Cargo.lock
 #.idea/
 
 output_debug.txt
-InputFiles/2023/
-InputFiles/2020/
-InputFiles/2024/
+input/

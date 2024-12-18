@@ -31,6 +31,20 @@
             "args": [
                 "run",
                 "--release",
+                "RUSTFLAGS=\"-C target-cpu=native\""
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
+        {
+            "label": "Rust Release Mode - Super Fast",
+            "command": "cargo",
+            "args": [
+                "run",
+                "--release",
             ],
             "options": {
                 "cwd": "${workspaceRoot}"
