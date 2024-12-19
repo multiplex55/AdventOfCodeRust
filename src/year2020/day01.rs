@@ -25,10 +25,11 @@ pub fn part2(input: &[usize]) -> usize {
 
     for i in 0..input.len() {
         let first = input[i];
-        for j in i..input.len() - 1 {
+        for j in i..input.len() {
             let second = input[j];
-            for k in input.iter().take(input.len() - 2).skip(j) {
+            for k in input.iter().skip(j) {
                 let third = *k;
+                let temp = first + second + third;
                 if first + second + third == 2020 {
                     sum += first * second * third;
                 }

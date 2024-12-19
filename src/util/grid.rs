@@ -3,8 +3,8 @@
 //! The traits [`Index`] and [`IndexMut`] are implemented for [`Point`] to allow usage like:
 //!
 //! ```
-//!   # use aoc::util::grid::Grid;
-//!   # use aoc::util::point::Point;
+//!   # use advent_of_code_rust::util::grid::Grid;
+//!   # use advent_of_code_rust::util::point::Point;
 //!
 //!   let mut grid = Grid::parse("1");
 //!   let point = Point::new(0, 0);
@@ -42,7 +42,11 @@ impl Grid<u8> {
         let height = raw.len() as i32;
         let mut bytes = Vec::with_capacity((width * height) as usize);
         raw.iter().for_each(|slice| bytes.extend_from_slice(slice));
-        Grid { width, height, bytes }
+        Grid {
+            width,
+            height,
+            bytes,
+        }
     }
 
     pub fn print(&self) {
@@ -71,7 +75,11 @@ impl<T: Copy + PartialEq> Grid<T> {
 
 impl<T: Copy> Grid<T> {
     pub fn new(width: i32, height: i32, value: T) -> Grid<T> {
-        Grid { width, height, bytes: vec![value; (width * height) as usize] }
+        Grid {
+            width,
+            height,
+            bytes: vec![value; (width * height) as usize],
+        }
     }
 }
 

@@ -6,7 +6,7 @@
 //! operator overloading, that allows shorthand expressions such as:
 //!
 //! ```
-//!   # use aoc::util::point::Point;
+//!   # use advent_of_code_rust::util::point::Point;
 //!
 //!   let a = Point::new(1, 2);
 //!   let b = Point::new(3, 4);
