@@ -27,12 +27,12 @@ library!(util "Utility modules to handle common recurring Advent of Code pattern
 );
 
 library!(year2020 "What could go wrong trying to enjoy a well deserved vacation?"
-    day01
+    day01,day02
 );
 // library!(year2023 "Restore global snow production."
 //     day01, day02, day03
 // );
 
-// library!(year2024 "Locate the Chief Historian in time for the big Christmas sleigh launch."
-//     day01, day02, day03
-// );
+library!(year2024 "Locate the Chief Historian in time for the big Christmas sleigh launch."
+    day01
+);

@@ -42,6 +42,7 @@ fn main() {
     // Filter solutions
     let solutions = empty()
         .chain(year2020())
+        .chain(year2024())
         .filter(|solution| match &year {
             Some(y) => y
                 .parse::<u32>()
@@ -127,13 +128,13 @@ macro_rules! run {
 }
 
 run!(year2020
-    day01
+    day01,day02
 );
 
 // run!(year2023
 //     day01, day02, day03
 // );
 
-// run!(year2024
-//     day01, day02, day03
-// );
+run!(year2024
+    day01
+);
