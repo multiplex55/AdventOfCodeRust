@@ -3,8 +3,6 @@
 #![allow(dead_code)]
 #![allow(unused_mut)]
 
-use std::thread::current;
-
 pub fn parse(input: &str) -> Vec<Vec<usize>> {
     let x: Vec<Vec<usize>> = input
         .lines()
@@ -23,7 +21,6 @@ fn is_safe(current_input: &[usize]) -> bool {
         .iter()
         .as_slice()
         .windows(2)
-        // .inspect(|w| println!("{:?}", w))
         .all(|w| w[0] >= w[1]);
 
     let adjacent_differences = current_input

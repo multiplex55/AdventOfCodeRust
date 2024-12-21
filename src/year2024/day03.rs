@@ -10,17 +10,10 @@ pub fn parse(input: &str) -> Vec<String> {
         .collect()
 }
 
-pub fn part1(input: &Vec<String>) -> usize {
-    for i in input {
-        dbg!(i);
-    }
+pub fn part1(input: &[String]) -> usize {
     123
 }
 
-pub fn part2(input: &Vec<String>) -> usize {
-    for i in input {
-        dbg!(i);
-    }
-
+pub fn part2(input: &[String]) -> usize {
     456
 }
