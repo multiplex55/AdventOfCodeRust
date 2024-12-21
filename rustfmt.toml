@@ -1,5 +1,6 @@
 # https://rust-lang.github.io/rustfmt/?version=v1.6.0&search=
 chain_width = 30
+max_width = 80
 
 newline_style = "unix"
 use_field_init_shorthand = true

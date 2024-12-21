@@ -34,5 +34,5 @@ library!(year2020 "What could go wrong trying to enjoy a well deserved vacation?
 // );
 
 library!(year2024 "Locate the Chief Historian in time for the big Christmas sleigh launch."
-    day01,day02
+    day01,day02,day03
 );

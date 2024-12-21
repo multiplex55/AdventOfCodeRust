@@ -136,5 +136,5 @@ run!(year2020
 // );
 
 run!(year2024
-    day01,day02
+    day01,day02,day03
 );

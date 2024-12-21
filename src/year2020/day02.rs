@@ -51,7 +51,14 @@ pub fn part1(input: &[Rule<'_>]) -> usize {
             let letter_count = rule
                 .password
                 .chars()
-                .filter(|letter| *letter == rule.letter.chars().next().unwrap())
+                .filter(|letter| {
+                    *letter
+                        == rule
+                            .letter
+                            .chars()
+                            .next()
+                            .unwrap()
+                })
                 .count();
             rule.start <= letter_count && letter_count <= rule.end
         })
@@ -84,12 +91,30 @@ pub fn part2(input: &[Rule<'_>]) -> usize {
     input
         .iter()
         .filter(|rule| {
-            let first_letter = rule.password.char_indices().nth(rule.start - 1).unwrap();
-            let second_letter = rule.password.char_indices().nth(rule.end - 1).unwrap();
+            let first_letter = rule
+                .password
+                .char_indices()
+                .nth(rule.start - 1)
+                .unwrap();
+            let second_letter = rule
+                .password
+                .char_indices()
+                .nth(rule.end - 1)
+                .unwrap();
 
             first_letter.1 != second_letter.1
-                && (first_letter.1 == rule.letter.chars().next().unwrap()
-                    || second_letter.1 == rule.letter.chars().next().unwrap())
+                && (first_letter.1
+                    == rule
+                        .letter
+                        .chars()
+                        .next()
+                        .unwrap()
+                    || second_letter.1
+                        == rule
+                            .letter
+                            .chars()
+                            .next()
+                            .unwrap())
         })
         .count()
 }

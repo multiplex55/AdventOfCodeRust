@@ -3,6 +3,8 @@
 #![allow(dead_code)]
 #![allow(unused_mut)]
 
+use std::thread::current;
+
 pub fn parse(input: &str) -> Vec<Vec<usize>> {
     let x: Vec<Vec<usize>> = input
         .lines()
