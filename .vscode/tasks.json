@@ -91,5 +91,17 @@
             "type": "shell",
             "problemMatcher": []
         },
+        {
+            "label": "Rust Doc",
+            "command": "cargo",
+            "args": [
+                "rustdoc",
+            ],
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "type": "shell",
+            "problemMatcher": []
+        },
     ]
 }
